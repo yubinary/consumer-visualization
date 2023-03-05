@@ -23,26 +23,15 @@
   let drawMap = async function () {
     let data = await d3.csv("./datasets/zillow_pittsburgh_csv.csv")
     console.log(data);
-    let pitt = await d3.json("./datasets/PA-42-pennsylvania-counties.json")
-    console.log(pitt)
     let pittcounties = await d3.json("./datasets/pittsburghpaneighborhoods-.json")
     console.log(pittcounties)
     // Creating Penn map
-    let counties = topojson.feature(pitt, pitt.objects.cb_2015_pennsylvania_county_20m
-    );
-    let countiesMesh = topojson.mesh(pitt, pitt.objects.cb_2015_pennsylvania_county_20m
-    );
-    let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], counties);
+    let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
     let path = d3.geoPath().projection(projection);
-    mainMap.selectAll("path.counties").data(counties.features)
+    mainMap.selectAll("path.county").data(pittcounties.features)
       .join("path")
-      .attr("class", "counties")
+      .attr("class", "county")
       .attr("d", path)
-    let mesh = mainMap.append("path").datum(countiesMesh)
-      .attr("class", "outline")
-      .attr("d", path)
-      .attr("stroke", "gray")
-      .attr('stroke-width', 1)
 
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
     map.call(zoom);
@@ -51,7 +40,6 @@
 
     function zoomed(event) {
       mainMap.attr("transform", event.transform);
-      mesh.attr("stroke-width", 1 / event.transform.k)
       k = event.transform.k
     };
   }
