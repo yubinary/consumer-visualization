@@ -33,15 +33,56 @@
       .attr("class", "county")
       .attr("d", path)
 
+    // zooming interactivity
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
     map.call(zoom);
-
     var k = 1;
-
     function zoomed(event) {
       mainMap.attr("transform", event.transform);
+      circles.attr("r", 5 / event.transform.k)
       k = event.transform.k
     };
+
+    //House data points
+    data.forEach((d, i) => {
+      d["coords"] = projection([d['Longitude'], d["Latitude"]]);
+    })
+    let circles = mainMap.selectAll("circle").data(data)
+      .join("circle")
+      .attr("class", "circle")
+      .attr("r", 5 / k)
+      .attr('cx', d => d["coords"][0])
+      .attr("cy", d => d["coords"][1])
+      .attr("fill", "blue")
+
+    circles.on("mouseover", function (d) {
+      let circle = d3.select(this)
+      console.log(this.cx)
+      circle.attr("r", circle.attr("r") * 1.5)
+        .attr("fill", "green")
+      mouseover.style("visibility", "visible");
+      updateMouseover(circle.datum());
+    });
+
+    circles.on("mouseout", function (d) {
+      let circle = d3.select(this)
+      circle.attr("r", circle.attr("r") / 1.5)
+        .attr("fill", "blue")
+      mouseover.style("visibility", "hidden");
+    })
+
+    let mouseover = map.append("g")
+      .attr("class", "mouseover")
+      .attr("visibility", "hidden")
+
+    let info = mouseover.append("text")
+      .attr("class", "mouseover-text")
+      .attr("x", 100)
+      .attr("y", 100);
+    function updateMouseover(d) {
+      AddressInfo = `Address: ${d["Street Address"]}`
+      info.text(AddressInfo)
+    }
   }
   drawMap();
 
