@@ -5,13 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://d3js.org/topojson.v3.min.js"></script>
+  <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
-
+  <svg id="main" height=900 width=1100 style="border:1px solid black;margin-bottom: 0;"></svg>
 </body>
 
 <script>
+  const map = d3.select("#main")
+  const margins = { t: 20, r: 30, b: 20, l: 30 }
+  const mapWidth = map.attr("width") - margins.l - margins.r
+  const mapHeight = map.attr("height") - margins.t - margins.b
+  const mainMap = map.append("g")
+    .attr("transform", `translate(${margins.l},${margins.t})`)
+
+  let drawMap = async function () {
+    let data = await d3.csv("./datasets/zillow_pittsburgh_csv.csv")
+    console.log(data);
+    let pitt = await d3.json("./datasets/PA-42-pennsylvania-counties.json")
+    console.log(pitt)
+    let pittcounties = await d3.json("./datasets/pittsburghpaneighborhoods-.json")
+    console.log(pittcounties)
+    // Creating Penn map
+    let counties = topojson.feature(pitt, pitt.objects.cb_2015_pennsylvania_county_20m
+    );
+    let countiesMesh = topojson.mesh(pitt, pitt.objects.cb_2015_pennsylvania_county_20m
+    );
+    let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], counties);
+    let path = d3.geoPath().projection(projection);
+    mainMap.selectAll("path.counties").data(counties.features)
+      .join("path")
+      .attr("class", "counties")
+      .attr("d", path)
+    let mesh = mainMap.append("path").datum(countiesMesh)
+      .attr("class", "outline")
+      .attr("d", path)
+      .attr("stroke", "gray")
+      .attr('stroke-width', 1)
+
+    var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
+    map.call(zoom);
+
+    var k = 1;
+
+    function zoomed(event) {
+      mainMap.attr("transform", event.transform);
+      mesh.attr("stroke-width", 1 / event.transform.k)
+      k = event.transform.k
+    };
+  }
+  drawMap();
 
 </script>
 
