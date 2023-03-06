@@ -14,6 +14,13 @@
     <svg id="main" height=900 width=1100></svg>
     <form id="form">
       <div class="form-field">
+        <h3>Category</h3>
+        <input type="checkbox" id="single" name="category" value="SingleFamily">Single
+        <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">Multiple
+        <input type="checkbox" id="townhouse" name="category" value="Townhouse">Townhouse
+        <input type="checkbox" id="condo" name="category" value="Condominium">Condominium
+      </div>
+      <div class="form-field">
         <h3>Rooms</h3>
         <p>Bedroom</p>
         <input type="radio" id="bed1" name="bedroom" value="0">0
@@ -43,6 +50,9 @@
       <div class="form-field">
         <input type="button" id="button" value="Apply Filter">
       </div>
+      <div class="form-result">
+        <ul id="top-house"></ul>
+      </div>
     </form>
   </div>
 </body>
@@ -64,6 +74,11 @@
 
     let button = document.getElementById("button");
     button.addEventListener('click', () => {
+      var category = [];
+      var checkboxes = document.querySelectorAll('input[name="category"]:checked');
+      for (var i = 0; i < checkboxes.length; i++) {
+        category.push(checkboxes[i].value)
+      }
       var bedroom = document.querySelector('input[name="bedroom"]:checked') ? document.querySelector('input[name="bedroom"]:checked').value : null;
       var bathroom = document.querySelector('input[name="bathroom"]:checked') ? document.querySelector('input[name="bathroom"]:checked').value : null;
       var minRoom = document.getElementById('minRoom').value || null;
@@ -71,6 +86,15 @@
       var minPrice = document.getElementById('minPrice').value || null;
       var maxPrice = document.getElementById('maxPrice').value || null;
       var type = document.querySelector('input[name="type"]:checked') ? document.querySelector('input[name="type"]:checked').value : null;
+
+      // filter by category
+      function filterByCategory(obj) {
+        if (category.includes(obj["Property Type"])) {
+          return true
+        } else {
+          return false
+        }
+      }
 
       // filter by bedroom
       function filterByBedroom(obj) {
@@ -118,6 +142,10 @@
 
       // re-render house by filtered data
       var newData = data;
+      if (category.length > 0) {
+        console.log(category)
+        newData = newData.filter(filterByCategory);
+      }
       if (bedroom) {
         newData = newData.filter(filterByBedroom);
       }
@@ -130,11 +158,25 @@
       if (minPrice && maxPrice) {
         newData = newData.filter(filterByPrice);
       }
-
-      console.log(newData);
       renderHouse(newData);
-    });
 
+      // sort the filtered data
+      // priority: Finished size (desc) > Lot size (desc) > “Year built” (desc)
+      function compare(a, b) {
+        return b["Finished Size (Sq.Ft.)"].localeCompare(a["Finished Size (Sq.Ft.)"], undefined, { 'numeric': true })
+          || b["Lot Size (Sq.Ft.)"].localeCompare(a["Lot Size (Sq.Ft.)"], undefined, { 'numeric': true })
+          || b["Year Built"] - a["Year Built"];
+      }
+
+      // display top 5 houses
+      newData.sort(compare);
+      let topFive = newData.slice(0, 5);
+      var ul = document.getElementById('top-house');
+      ul.innerHTML = "";
+      for (let i = 0; i < 5; i++) {
+        ul.innerHTML += '<li><p>' + topFive[i]["Street Address"] + '</p></li>';
+      }
+    });
 
     // create Penn map
     let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
