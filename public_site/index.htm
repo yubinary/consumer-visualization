@@ -55,6 +55,21 @@
       </div>
     </form>
   </div>
+
+    <!-- information about the house !--> 
+    <div class="infobox">
+      <p> Hover over circles to view details!</p> 
+      <p>Address: <span id="address"></span></p>
+      <p>Number of bedroom(s): <span id="bedroom"></span></p>
+      <p>Number of bathroom(s): <span id="bathroom"></span></p>
+      <p>Total number of rooms: <span id="roomnum"></span></p>
+      <p>Sales Amount: <span id="salesamount"></span></p>
+      <p>Rent Amount: <span id="rentamount"></span></p>
+      <p>Lot size: <span id="lotsize"></span></p>
+      <p>Finished size: <span id="finishedsize"></span></p>
+      <p>Year built: <span id="year"></span></p>
+    </div>
+
 </body>
 
 <script>
@@ -186,6 +201,20 @@
       .attr("class", "county")
       .attr("d", path)
 
+    // display info 
+    function displayText(address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year) {
+
+      document.getElementById("address").innerHTML = address;
+      document.getElementById("bedroom").innerHTML = bedroom;
+      document.getElementById("bathroom").innerHTML = bathroom;
+      document.getElementById("roomnum").innerHTML = roomnum;
+      document.getElementById("salesamount").innerHTML = sales;
+      document.getElementById("rentamount").innerHTML = rent;
+      document.getElementById("lotsize").innerHTML = lotsize;
+      document.getElementById("finishedsize").innerHTML = finish;
+      document.getElementById("year").innerHTML = year;
+
+    }
 
     function renderHouse(data) {
       // zooming interactivity
@@ -235,13 +264,20 @@
         .attr("y", 100);
 
       function updateMouseover(d) {
-        AddressInfo = `Address: ${d["Street Address"]}`
-        info.text(AddressInfo)
+        //AddressInfo = `Address: ${d["Street Address"]}`
+        //info.text(AddressInfo)
+        format = d3.format(",");
+       //address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year
+        displayText(d["Street Address"],d["Bedrooms"],d["Bathroom"],d["Total Rooms"],format(d["Sale Amount"]),format(d["Rent Amount"]),format(d["Lot Size (Sq.Ft.)"]),
+        format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
       }
+
+      
     }
 
     // render house on the map
     renderHouse(data);
+    
   }
 
   drawMap();
