@@ -186,17 +186,17 @@
       .attr("class", "county")
       .attr("d", path)
 
-    // zooming interactivity
-    var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
-    map.call(zoom);
-    var k = 1;
-    function zoomed(event) {
-      mainMap.attr("transform", event.transform);
-      circles.attr("r", 5 / event.transform.k)
-      k = event.transform.k
-    };
 
     function renderHouse(data) {
+      // zooming interactivity
+      var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
+      map.call(zoom);
+      var k = 1;
+      function zoomed(event) {
+        mainMap.attr("transform", event.transform);
+        circles.attr("r", 5 / event.transform.k)
+        k = event.transform.k
+      };
       //House data points
       data.forEach((d, i) => {
         d["coords"] = projection([d['Longitude'], d["Latitude"]]);
