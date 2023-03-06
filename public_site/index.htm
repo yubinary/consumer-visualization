@@ -14,6 +14,7 @@
     <svg id="main" height=900 width=1100></svg>
     <form id="form">
       <label>Bedrooms:</label>
+      <input type="radio" id="bed1" name="bedroom" value="0">0
       <input type="radio" id="bed1" name="bedroom" value="1">1
       <input type="radio" id="bed2" name="bedroom" value="2">2
       <input type="radio" id="bed3" name="bedroom" value="3">3
@@ -60,17 +61,31 @@
 
     let button = document.getElementById("button");
     button.addEventListener('click', () => {
-      var bedroom = document.querySelector('input[name="bedroom"]:checked').value;
-      var bathroom = document.querySelector('input[name="bathroom"]:checked').value;
+      var bedroom = document.querySelector('input[name="bedroom"]:checked') ? document.querySelector('input[name="bedroom"]:checked').value : null;
+      var bathroom = document.querySelector('input[name="bathroom"]:checked') ? document.querySelector('input[name="bathroom"]:checked').value : null;
 
-      var minPrice = document.getElementById('minPrice').value;
-      var maxPrice = document.getElementById('maxPrice').value;
-      var type = document.querySelector('input[name="type"]:checked').value;
+      var minPrice = document.getElementById('minPrice').value || null;
+      var maxPrice = document.getElementById('maxPrice').value || null;
+      var type = document.querySelector('input[name="type"]:checked') ? document.querySelector('input[name="type"]:checked').value : null;
 
-      console.log(bedroom, bathroom, minPrice, maxPrice, type);
+      function filterByBedroom(obj) {
+        if ((bedroom < 5 && bedroom == parseInt(obj["Bedrooms"])) || (bedroom == 5 && 5 <= parseInt(obj["Bedrooms"]))) {
+          return true
+        } else {
+          return false
+        }
+      }
+
+      function filterByBathroom(obj) {
+        if ((bathroom < 5 && bathroom == parseInt(obj["Bathroom"])) || (bathroom == 5 && 5 <= parseInt(obj["Bathroom"]))) {
+          return true
+        } else {
+          return false
+        }
+      }
 
       function filterByPrice(obj) {
-        if (type == "sale") {
+        if (type == "sales") {
           if (minPrice <= parseInt(obj["Sale Amount"]) && parseInt(obj["Sale Amount"]) <= maxPrice) {
             return true
           } else {
@@ -85,7 +100,18 @@
         }
       }
 
-      let newData = data.filter(filterByPrice);
+      var newData = data;
+      if (bedroom) {
+        newData = newData.filter(filterByBedroom);
+      }
+      if (bathroom) {
+        newData = newData.filter(filterByBathroom);
+      }
+      if (minPrice && maxPrice) {
+        newData = newData.filter(filterByPrice);
+      }
+
+      console.log(newData);
       renderHouse(newData);
     });
 
@@ -152,27 +178,7 @@
       }
     }
 
-
-    const bedExtent = [10000, 0]
-    const bathExtent = [10000, 0]
-    const roomExtent = [10000, 0]
-    for (var key in data) {
-      if (data[key]["Bedrooms"] && data[key]["Bathroom"] && data[key]["Total Rooms"]) {
-        bedExtent[0] = Math.min(bedExtent[0], parseInt(data[key]["Bedrooms"]));
-        bedExtent[1] = Math.max(bedExtent[1], parseInt(data[key]["Bedrooms"]));
-
-        bathExtent[0] = Math.min(bathExtent[0], parseInt(data[key]["Bathroom"]));
-        bathExtent[1] = Math.max(bathExtent[1], parseInt(data[key]["Bathroom"]));
-
-        roomExtent[0] = Math.min(roomExtent[0], parseInt(data[key]["Total Rooms"]));
-        roomExtent[1] = Math.max(roomExtent[1], parseInt(data[key]["Total Rooms"]));
-      }
-    }
-
-    console.log(bedExtent, bathExtent, roomExtent);
-
     renderHouse(data);
-
   }
 
   drawMap();
