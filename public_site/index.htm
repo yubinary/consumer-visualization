@@ -1,4 +1,4 @@
-<html lang="en">
+<!DOCTYPE html>
 
 <head>
   <meta charset="UTF-8" />
@@ -6,10 +6,41 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://d3js.org/topojson.v3.min.js"></script>
   <link href="style.css" rel="stylesheet">
+  <title>Consumer Visualization</title>
 </head>
 
 <body>
-  <svg id="main" height=900 width=1100 style="border:1px solid black;margin-bottom: 0;"></svg>
+  <div class="flex">
+    <svg id="main" height=900 width=1100></svg>
+    <form id="form">
+      <label>Bedrooms:</label>
+      <input type="radio" id="bed1" name="bedroom" value="1">1
+      <input type="radio" id="bed2" name="bedroom" value="2">2
+      <input type="radio" id="bed3" name="bedroom" value="3">3
+      <input type="radio" id="bed4" name="bedroom" value="4">4
+      <input type="radio" id="bed5" name="bedroom" value="5">5+
+      <br />
+      <label>Bathrooms:</label>
+      <input type="radio" id="bath1" name="bathroom" value="1">1
+      <input type="radio" id="bath2" name="bathroom" value="2">2
+      <input type="radio" id="bath3" name="bathroom" value="3">3
+      <input type="radio" id="bath4" name="bathroom" value="4">4
+      <input type="radio" id="bath5" name="bathroom" value="5">5+
+      <br />
+      <label>Total Rooms:</label>
+      <input type="text" id="minRoom" name="minRoom">
+      <input type="text" id="maxRoom" name="maxRoom">
+      <br />
+      <input type="radio" id="sales" name="type" value="sales">For Sales
+      <input type="radio" id="rent" name="type" value="rent">For Rent
+      <br />
+      <label>Price Range</label>
+      <input type="text" id="minPrice" name="minPrice">
+      <input type="text" id="maxPrice" name="maxPrice">
+      <br />
+      <input type="button" id="button" value="Apply Filter">
+    </form>
+  </div>
 </body>
 
 <script>
@@ -23,8 +54,42 @@
   let drawMap = async function () {
     let data = await d3.csv("./datasets/zillow_pittsburgh_csv.csv")
     console.log(data);
+
     let pittcounties = await d3.json("./datasets/pittsburghpaneighborhoods-.json")
     console.log(pittcounties)
+
+    let button = document.getElementById("button");
+    button.addEventListener('click', () => {
+      var bedroom = document.querySelector('input[name="bedroom"]:checked').value;
+      var bathroom = document.querySelector('input[name="bathroom"]:checked').value;
+
+      var minPrice = document.getElementById('minPrice').value;
+      var maxPrice = document.getElementById('maxPrice').value;
+      var type = document.querySelector('input[name="type"]:checked').value;
+
+      console.log(bedroom, bathroom, minPrice, maxPrice, type);
+
+      function filterByPrice(obj) {
+        if (type == "sale") {
+          if (minPrice <= parseInt(obj["Sale Amount"]) && parseInt(obj["Sale Amount"]) <= maxPrice) {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          if (minPrice <= parseInt(obj["Rent Amount"]) && parseInt(obj["Rent Amount"]) <= maxPrice) {
+            return true
+          } else {
+            return false
+          }
+        }
+      }
+
+      let newData = data.filter(filterByPrice);
+      renderHouse(newData);
+    });
+
+
     // Creating Penn map
     let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
     let path = d3.geoPath().projection(projection);
@@ -43,49 +108,75 @@
       k = event.transform.k
     };
 
-    //House data points
-    data.forEach((d, i) => {
-      d["coords"] = projection([d['Longitude'], d["Latitude"]]);
-    })
-    let circles = mainMap.selectAll("circle").data(data)
-      .join("circle")
-      .attr("class", "circle")
-      .attr("r", 5 / k)
-      .attr('cx', d => d["coords"][0])
-      .attr("cy", d => d["coords"][1])
-      .attr("fill", "blue")
-
-    circles.on("mouseover", function (d) {
-      let circle = d3.select(this)
-      console.log(this.cx)
-      circle.attr("r", circle.attr("r") * 1.5)
-        .attr("fill", "green")
-      mouseover.style("visibility", "visible");
-      updateMouseover(circle.datum());
-    });
-
-    circles.on("mouseout", function (d) {
-      let circle = d3.select(this)
-      circle.attr("r", circle.attr("r") / 1.5)
+    function renderHouse(data) {
+      //House data points
+      data.forEach((d, i) => {
+        d["coords"] = projection([d['Longitude'], d["Latitude"]]);
+      })
+      let circles = mainMap.selectAll("circle").data(data)
+        .join("circle")
+        .attr("class", "circle")
+        .attr("r", 5 / k)
+        .attr('cx', d => d["coords"][0])
+        .attr("cy", d => d["coords"][1])
         .attr("fill", "blue")
-      mouseover.style("visibility", "hidden");
-    })
 
-    let mouseover = map.append("g")
-      .attr("class", "mouseover")
-      .attr("visibility", "hidden")
+      circles.on("mouseover", function (d) {
+        let circle = d3.select(this)
+        console.log(this.cx)
+        circle.attr("r", circle.attr("r") * 1.5)
+          .attr("fill", "green")
+        mouseover.style("visibility", "visible");
+        updateMouseover(circle.datum());
+      });
 
-    let info = mouseover.append("text")
-      .attr("class", "mouseover-text")
-      .attr("x", 100)
-      .attr("y", 100);
-    function updateMouseover(d) {
-      AddressInfo = `Address: ${d["Street Address"]}`
-      info.text(AddressInfo)
+      circles.on("mouseout", function (d) {
+        let circle = d3.select(this)
+        circle.attr("r", circle.attr("r") / 1.5)
+          .attr("fill", "blue")
+        mouseover.style("visibility", "hidden");
+      })
+
+      let mouseover = map.append("g")
+        .attr("class", "mouseover")
+        .attr("visibility", "hidden")
+
+      let info = mouseover.append("text")
+        .attr("class", "mouseover-text")
+        .attr("x", 100)
+        .attr("y", 100);
+
+      function updateMouseover(d) {
+        AddressInfo = `Address: ${d["Street Address"]}`
+        info.text(AddressInfo)
+      }
     }
-  }
-  drawMap();
 
+
+    const bedExtent = [10000, 0]
+    const bathExtent = [10000, 0]
+    const roomExtent = [10000, 0]
+    for (var key in data) {
+      if (data[key]["Bedrooms"] && data[key]["Bathroom"] && data[key]["Total Rooms"]) {
+        bedExtent[0] = Math.min(bedExtent[0], parseInt(data[key]["Bedrooms"]));
+        bedExtent[1] = Math.max(bedExtent[1], parseInt(data[key]["Bedrooms"]));
+
+        bathExtent[0] = Math.min(bathExtent[0], parseInt(data[key]["Bathroom"]));
+        bathExtent[1] = Math.max(bathExtent[1], parseInt(data[key]["Bathroom"]));
+
+        roomExtent[0] = Math.min(roomExtent[0], parseInt(data[key]["Total Rooms"]));
+        roomExtent[1] = Math.max(roomExtent[1], parseInt(data[key]["Total Rooms"]));
+      }
+    }
+
+    console.log(bedExtent, bathExtent, roomExtent);
+
+    renderHouse(data);
+
+  }
+
+  drawMap();
 </script>
+
 
 </html>
