@@ -8,6 +8,35 @@
   <script src="https://d3js.org/topojson.v3.min.js"></script>
   <link href="style.css" rel="stylesheet">
   <title>Consumer Visualization</title>
+
+  <style>
+    .infobox{
+      border: 1px solid lightgray;
+      background-color: white;
+      border-radius: 20px;
+      width: 350px;
+      height: 250px;
+      padding: 20px;
+    }
+
+    #salesamount {
+      font-size: 25px;
+      font-weight: 600;
+      color: blue;
+    }
+
+    #address {
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    /* #bedroom, #bathroom, #roomnum {
+      margin-right: 20px;
+    } */
+
+   
+  </style>
 </head>
 
 <body>
@@ -18,18 +47,15 @@
     <svg id="main" height=900 width=1100></svg>
 
     <!-- information about the house !-->
+    <div> 
+    <p> Hover over circles to view details!</p>
     <div class="infobox">
-      <p> Hover over circles to view details!</p>
-      <p>Address: <span id="address"></span></p>
-      <p>Number of bedroom(s): <span id="bedroom"></span></p>
-      <p>Number of bathroom(s): <span id="bathroom"></span></p>
-      <p>Total number of rooms: <span id="roomnum"></span></p>
-      <p>Sales Amount: <span id="salesamount"></span></p>
-      <p>Rent Amount: <span id="rentamount"></span></p>
-      <p>Lot size: <span id="lotsize"></span></p>
-      <p>Finished size: <span id="finishedsize"></span></p>
-      <p>Year built: <span id="year"></span></p>
-    </div>
+      <div class="price"><p><span id="salesamount"></span> for sale (<span id="rentamount"></span> for rent)</p> </div>
+      <p><span id="address"></span></p>
+      <div class="flex-box"> <p><span id="bedroom"></span><span id="bathroom"></span><span id="roomnum"></span></p></div>
+      <p><span id="lotsize"></span><span id="finishedsize"></span></p>
+      <p>Built in <span id="year"></span></p>
+    </div></div>
     <div class="formDiv">
       <form id="form">
         <div class="form-field">
@@ -305,9 +331,10 @@
 
       function updateMouseover(d) {
         format = d3.format(",");
+        dollar = d3.format('$,');
         //address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year
-        displayText(d["Street Address"], d["Bedrooms"], d["Bathroom"], d["Total Rooms"], format(d["Sale Amount"]), format(d["Rent Amount"]), format(d["Lot Size (Sq.Ft.)"]),
-          format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
+        displayText(d["Street Address"],d["Bedrooms"]+ " bd.", d["Bathroom"]+ " ba.", d["Total Rooms"] + " tot.", dollar((d["Sale Amount"])), dollar(d["Rent Amount"]), format(d["Lot Size (Sq.Ft.)"])+ " sqrt (lot size)",
+          format(d["Finished Size (Sq.Ft.)"]) + " sqrt (finished size)", d["Year Built"]);
       }
 
     // mouse out function
