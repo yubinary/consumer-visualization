@@ -220,6 +220,9 @@
 
     }
 
+     displayText("", "", "", "");
+
+
     function renderHouse(data) {
       // zooming interactivity
       var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
@@ -259,6 +262,8 @@
         circle.attr("r", circle.attr("r") / 1.5)
           .attr("fill", "blue")
         mouseover.style("visibility", "hidden");
+        updateMouseout();
+
       })
 
       let mouseover = map.append("g")
@@ -271,6 +276,14 @@
         displayText(d["Street Address"], d["Bedrooms"], d["Bathroom"], d["Total Rooms"], format(d["Sale Amount"]), format(d["Rent Amount"]), format(d["Lot Size (Sq.Ft.)"]),
           format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
       }
+
+          // mouse out function
+      function updateMouseout() {
+
+      displayText("", "", "", "");
+
+    }
+  
 
     }
 
