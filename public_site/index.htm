@@ -11,8 +11,12 @@
 </head>
 
 <body>
+  <svg id="sales" height=300 width=500></svg>
+  <svg id="rent" height=300 width=500></svg>
   <div class="flex">
+    
     <svg id="main" height=900 width=1100></svg>
+
     <!-- information about the house !-->
     <div class="infobox">
       <p> Hover over circles to view details!</p>
@@ -72,7 +76,9 @@
         </div>
       </form>
     </div>
+
   </div>
+
 </body>
 
 <script>
@@ -319,6 +325,7 @@
     var saleAmount = [];
     var rentAmount =[];
     var saleDict = {};
+    var rentDict = {};
 
     data.forEach(d => {
       saleAmount.push(parseInt(d['Sale Amount']));
@@ -328,86 +335,74 @@
     saleAmount.sort((a,b)=>a-b);
     rentAmount.sort((a,b)=>a-b);
 
+    console.log(rentAmount); // 804 ~ 3810
+    console.log(saleAmount); // 38464 ~ 1710414
+
+
     // 2. make the dictionary of counts for the price: tick: 20 
+    // Sales price 
+    saleDict["38464"] = 0, saleDict["122062"] = 0, saleDict["205659"] = 0, saleDict["289256"] = 0, saleDict["372854"] = 0;
+    saleDict["456451"] = 0, saleDict["540048"] = 0, saleDict["623646"] = 0, saleDict["707243"] = 0, saleDict["790840"] = 0;
+    saleDict["874438"] = 0, saleDict["958035"] = 0, saleDict["1047632"] = 0, saleDict["1137230"] = 0, saleDict["1226827"] = 0;
+    saleDict["1316424"] = 0, saleDict["1406022"] = 0, saleDict["1495619"] = 0, saleDict["1585216"] = 0; saleDict["1674814"] = 0;
 
-    saleDict["38464"] = 0;
-      saleDict["122062"] = 0;
-      saleDict["205659"] = 0;
-      saleDict["289256"] = 0;
-      saleDict["372854"] = 0;
-      saleDict["456451"] = 0;
-      saleDict["540048"] = 0;
-      saleDict["623646"] = 0;
-      saleDict["707243"] = 0;
-      saleDict["790840"] = 0;
-      saleDict["874438"] = 0;
-      saleDict["958035"] = 0;
-      saleDict["1047632"] = 0;
-      saleDict["1137230"] = 0;
-      saleDict["1226827"] = 0;
-      saleDict["1316424"] = 0;
-      saleDict["1406022"] = 0;
-      saleDict["1495619"] = 0;
-      saleDict["1585216"] = 0;
-      saleDict["1674814"] = 0;
-
-
-      for (let i = 0; i < saleAmount.length; i++) {
-        if (saleAmount[i] > 1674814) {
-          saleDict["1674814"] += 1
-        } else if (saleAmount[i] > 1674814) {
-          saleDict["1585216"] += 1
-        } else if (saleAmount[i] > 1585216) {
-          saleDict["1495619"] += 1
-        } else if (saleAmount[i] > 1495619) {
-          saleDict["1406022"] += 1
-        } else if (saleAmount[i] > 1406022) {
-          saleDict["1316424"] += 1
-        } else if (saleAmount[i] > 1316424) {
-          saleDict["1226827"] += 1
-        } else if (saleAmount[i] > 1226827) {
-          saleDict["1137230"] += 1
-        } else if (saleAmount[i] > 1137230) {
-          saleDict["1047632"] += 1
-        } else if (saleAmount[i] > 1047632) {
-          saleDict["874438"] += 1
-        } else if (saleAmount[i] > 958035) {
-          saleDict["958035"] += 1
-        } else if (saleAmount[i] > 874438) {
-          saleDict["874438"] += 1
-        } else if (saleAmount[i] > 790840) {
-          saleDict["790840"] += 1
-        } else if (saleAmount[i] > 707243) {
-          saleDict["707243"] += 1
-        } else if (saleAmount[i] > 623646) {
-          saleDict["623646"] += 1
-        } else if (saleAmount[i] > 540048) {
-          saleDict["540048"] += 1
-        } else if (saleAmount[i] > 456451) {
-          saleDict["456451"] += 1
-        } else if (saleAmount[i] > 372854) {
-          saleDict["372854"] += 1
-        } else if (saleAmount[i] > 289256) {
-          saleDict["289256"] += 1
-        } else if (saleAmount[i] > 205659) {
-          saleDict["205659"] += 1
-        } else if (saleAmount[i] > 122062) {
-          saleDict["122062"] += 1
-        } else if (saleAmount[i] > 38463) {
-          saleDict["38464"] += 1
+    for (let i = 0; i < saleAmount.length; i++) {
+      if (saleAmount[i] > 1674814) { saleDict["1674814"] += 1
+        } else if (saleAmount[i] > 1674814) { saleDict["1585216"] += 1
+        } else if (saleAmount[i] > 1585216) { saleDict["1495619"] += 1
+        } else if (saleAmount[i] > 1495619) { saleDict["1406022"] += 1
+        } else if (saleAmount[i] > 1406022) { saleDict["1316424"] += 1
+        } else if (saleAmount[i] > 1316424) { saleDict["1226827"] += 1
+        } else if (saleAmount[i] > 1226827) { saleDict["1137230"] += 1
+        } else if (saleAmount[i] > 1137230) { saleDict["1047632"] += 1
+        } else if (saleAmount[i] > 1047632) { saleDict["874438"] += 1
+        } else if (saleAmount[i] > 958035) { saleDict["958035"] += 1
+        } else if (saleAmount[i] > 874438) { saleDict["874438"] += 1
+        } else if (saleAmount[i] > 790840) { saleDict["790840"] += 1
+        } else if (saleAmount[i] > 707243) { saleDict["707243"] += 1
+        } else if (saleAmount[i] > 623646) { saleDict["623646"] += 1
+        } else if (saleAmount[i] > 540048) { saleDict["540048"] += 1
+        } else if (saleAmount[i] > 456451) { saleDict["456451"] += 1
+        } else if (saleAmount[i] > 372854) { saleDict["372854"] += 1
+        } else if (saleAmount[i] > 289256) { saleDict["289256"] += 1
+        } else if (saleAmount[i] > 205659) { saleDict["205659"] += 1
+        } else if (saleAmount[i] > 122062) { saleDict["122062"] += 1
+        } else if (saleAmount[i] > 38463) { saleDict["38464"] += 1
       }
     }
 
+    // Rent Price
+    rentDict["804"] = 0, rentDict["1134"] = 0, rentDict["1464"] = 0, rentDict["1794"] = 0, rentDict["2124"] = 0;
+    rentDict["2454"] = 0, rentDict["2784"] = 0, rentDict["3114"] = 0, rentDict["3444"] = 0, rentDict["3774"] = 0;
+   
+    for (let i = 0; i < rentAmount.length; i++) {
+      if (rentAmount[i] > 3774) { rentDict["3774"] += 1
+        } else if (rentAmount[i] > 3444) { rentDict["3444"] += 1
+        } else if (rentAmount[i] > 3114) { rentDict["3114"] += 1
+        } else if (rentAmount[i] > 2784) { rentDict["2784"] += 1
+        } else if (rentAmount[i] > 2454) { rentDict["2454"] += 1
+        } else if (rentAmount[i] > 2124) { rentDict["2124"] += 1
+        } else if (rentAmount[i] > 1794) { rentDict["1794"] += 1
+        } else if (rentAmount[i] > 1464) { rentDict["1464"] += 1
+        } else if (rentAmount[i] > 1134) { rentDict["1134"] += 1
+        } else if (rentAmount[i] > 804) { rentDict["804"] += 1
+      }
+    }
 
-      // scale the 0 data to 10 
+      // 3. scale the data
       for (let key in saleDict) {
         saleDict[key] += 40;
     }
+    for (let key in rentDict) {
+      rentDict[key] += 40;
+    }
 
     console.log(saleDict);
+    console.log(rentDict)
 
-    // 2. set up the svg for Sales Amount bar Chart
-    var svg = d3.select("svg"),
+    // 2. set up the svg for Sales Amount bar Charts
+
+    var svg = d3.select("#sales"),
     margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom
@@ -448,6 +443,48 @@
       .attr('y', 20)
       .attr('text-anchor', 'middle')
       .text('Price Range (Sales Amount)');
+      
+    var svg2 = d3.select("#rent"),
+    margin2 = {top: 20, right: 20, bottom: 30, left: 40},
+    width2 = +svg.attr("width") - margin2.left - margin2.right,
+    height2 = +svg.attr("height") - margin2.top - margin2.bottom
+    
+    g = svg2.append("g").attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+    //  Define the scales for the x and y axes
+    let xScale2 = d3.scaleBand()
+                  .domain(Object.keys(rentDict))
+                  .range([0, 350])
+                  .padding(0);
+
+    let yScale2= d3.scaleLinear()
+                  .domain([0, d3.max(Object.values(rentDict))])
+                  .range([250, 0]);
+
+  // Create the bars
+    svg2.selectAll('rect')
+      .data(Object.entries(rentDict))
+      .enter()
+      .append('rect')
+      .attr('x', (d) => xScale2(d[0]))
+      .attr('y', (d) => yScale2(d[1]))
+      .attr('width', xScale2.bandwidth())
+      .attr('height', (d) => 250 - yScale2(d[1]))
+      .attr('fill', 'steelblue');
+
+  // x and y axis labels and titles
+    // svg.append('g')
+    // .attr('transform', 'translate(0, 250)')
+    // .call(d3.axisBottom(xScale));
+      
+    // svg.append('g')
+    //   .call(d3.axisLeft(yScale));
+
+    svg2.append('text')
+      .attr('x', 200)
+      .attr('y', 20)
+      .attr('text-anchor', 'middle')
+      .text('Price Range (Rent Amount)');
 
   }
 
