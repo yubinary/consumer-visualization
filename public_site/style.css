@@ -1,3 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
 .flex {
   display: flex;
   justify-content: center;
@@ -8,16 +12,12 @@ svg {
   display: block;
 }
 
-.filter {}
-
 .county {
   stroke: lightgray;
 }
 
 .formDiv {
   position: relative;
-  border: 3px solid black;
-  background-color: lightgray;
 }
 
 h3 {
@@ -32,3 +32,65 @@ p {
   margin-left: 10px;
 }
 
+.form-field,
+.form-button {
+  padding: 10px;
+  padding-bottom: 20px;
+  margin: 15px;
+  border: 1px solid black;
+  width: 280px;
+}
+
+.form-field h3 {
+  margin: 10px;
+  margin-bottom: 10px;
+}
+
+.form-field p {
+  margin: 10px 10px;
+}
+
+.form-field label {
+  font-size: 15px;
+}
+
+.form-field .checkbox {
+  margin: 10px 0px;
+}
+
+.form-field .range {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+}
+
+.form-field input[type=text] {
+  width: 120px;
+  padding: 5px 5px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.form-button {
+  display: flex;
+  border: 0px;
+  padding: 0px;
+  justify-content: space-between;
+  width: 300px;
+}
+
+#button,
+#reset-button {
+  background-color: #4c78af;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin: 0px;
+  padding: 15px 33px;
+}
+
+.no-border {
+  border: 0px;
+}

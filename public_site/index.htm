@@ -44,66 +44,90 @@
 
     <svg id="main" height=900 width=1100></svg>
 
-    <!-- information about the house !-->
+
     <div>
-      <p> Hover over circles to view details!</p>
-      <div class="infobox">
-        <div class="price">
-          <p><span id="salesamount"></span> for sale (<span id="rentamount"></span> for rent)</p>
-        </div>
-        <p><span id="address"></span></p>
-        <div class="flex-box">
-          <p><span id="bedroom"></span><span id="bathroom"></span><span id="roomnum"></span></p>
-        </div>
-        <p><span id="lotsize"></span><span id="finishedsize"></span></p>
-        <p>Built in <span id="year"></span></p>
+      <div class="formDiv">
+        <form id="form">
+          <div class="form-field">
+            <h3>Category</h3>
+            <div class="checkbox">
+              <input type="checkbox" id="single" name="category" value="SingleFamily">
+              <label for=SingleFamily">Single</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">
+              <label for=MultiFamily2To4">Multiple</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" id="townhouse" name="category" value="Townhouse">
+              <label for=Townhouse">Townhouse</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" id="condo" name="category" value="Condominium">
+              <label for=Condominium">Condominium</label>
+            </div>
+          </div>
+          <div class="form-field">
+            <h3>Rooms</h3>
+            <p>Bedroom</p>
+            <input type="radio" id="bed1" name="bedroom" value="0">0
+            <input type="radio" id="bed1" name="bedroom" value="1">1
+            <input type="radio" id="bed2" name="bedroom" value="2">2
+            <input type="radio" id="bed3" name="bedroom" value="3">3
+            <input type="radio" id="bed4" name="bedroom" value="4">4
+            <input type="radio" id="bed5" name="bedroom" value="5">5+
+            <p>Bathroom</p>
+            <input type="radio" id="bath1" name="bathroom" value="1">1
+            <input type="radio" id="bath2" name="bathroom" value="2">2
+            <input type="radio" id="bath3" name="bathroom" value="3">3
+            <input type="radio" id="bath4" name="bathroom" value="4">4
+            <input type="radio" id="bath5" name="bathroom" value="5">5+
+            <p>Total Room</p>
+            <div class="range">
+              <input type="text" id="minRoom" name="minRoom">
+              <input type="text" id="maxRoom" name="maxRoom">
+            </div>
+          </div>
+          <div class="form-field">
+            <h3>Price Range</h3>
+            <div class="checkbox">
+              <input type="radio" id="sales" name="type" value="sales">
+              <label for=sales">For Sale</label>
+            </div>
+            <div class="checkbox">
+              <input type="radio" id="rent" name="type" value="rent">
+              <label for=rent">For Rent</label>
+            </div>
+            <div class="range">
+              <input type="text" id="minPrice" name="minPrice">
+              <input type="text" id="maxPrice" name="maxPrice">
+            </div>
+          </div>
+          <div class="form-button">
+            <input type="button" id="button" value="Apply Filter">
+            <input type="button" id="reset-button" value="Reset Filter">
+          </div>
+          <div class="form-result">
+            <ul id="top-house"></ul>
+          </div>
+        </form>
       </div>
-    </div>
-    <div class="formDiv">
-      <form id="form">
-        <div class="form-field">
-          <h3>Category</h3>
-          <input type="checkbox" id="single" name="category" value="SingleFamily">Single
-          <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">Multiple
-          <input type="checkbox" id="townhouse" name="category" value="Townhouse">Townhouse
-          <p>
-          </p>
-          <input type="checkbox" id="condo" name="category" value="Condominium">Condominium
+
+      <!-- information about the house !-->
+      <div>
+        <p> Hover over circles to view details!</p>
+        <div class="infobox">
+          <div class="price">
+            <p><span id="salesamount"></span> for sale (<span id="rentamount"></span> for rent)</p>
+          </div>
+          <p><span id="address"></span></p>
+          <div class="flex-box">
+            <p><span id="bedroom"></span><span id="bathroom"></span><span id="roomnum"></span></p>
+          </div>
+          <p><span id="lotsize"></span><span id="finishedsize"></span></p>
+          <p>Built in <span id="year"></span></p>
         </div>
-        <div class="form-field">
-          <h3>Rooms</h3>
-          <p>Bedroom</p>
-          <input type="radio" id="bed1" name="bedroom" value="0">0
-          <input type="radio" id="bed1" name="bedroom" value="1">1
-          <input type="radio" id="bed2" name="bedroom" value="2">2
-          <input type="radio" id="bed3" name="bedroom" value="3">3
-          <input type="radio" id="bed4" name="bedroom" value="4">4
-          <input type="radio" id="bed5" name="bedroom" value="5">5+
-          <p>Bathroom</p>
-          <input type="radio" id="bath1" name="bathroom" value="1">1
-          <input type="radio" id="bath2" name="bathroom" value="2">2
-          <input type="radio" id="bath3" name="bathroom" value="3">3
-          <input type="radio" id="bath4" name="bathroom" value="4">4
-          <input type="radio" id="bath5" name="bathroom" value="5">5+
-          <p>Total Room</p>
-          <input type="text" id="minRoom" name="minRoom">
-          <input type="text" id="maxRoom" name="maxRoom">
-        </div>
-        <div class="form-field">
-          <h3>Price Range</h3>
-          <input type="radio" id="sales" name="type" value="sales">For Sales
-          <input type="radio" id="rent" name="type" value="rent">For Rent
-          <br />
-          <input type="text" id="minPrice" name="minPrice">
-          <input type="text" id="maxPrice" name="maxPrice">
-        </div>
-        <div class="form-field">
-          <input type="button" id="button" value="Apply Filter">
-        </div>
-        <div class="form-result">
-          <ul id="top-house"></ul>
-        </div>
-      </form>
+      </div>
     </div>
 
   </div>
