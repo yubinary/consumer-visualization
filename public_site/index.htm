@@ -289,6 +289,8 @@
         circle.attr("r", circle.attr("r") / 1.5)
           .attr("fill", "blue")
         mouseover.style("visibility", "hidden");
+        updateMouseout();
+
       })
 
       let mouseover = map.append("g")
@@ -302,6 +304,10 @@
           format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
       }
 
+    // mouse out function
+    function updateMouseout() {
+        displayText("", "", "", "", "", "", "", "","");
+      }
     }
 
     // render house on the map
