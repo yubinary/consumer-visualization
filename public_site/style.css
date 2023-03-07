@@ -11,8 +11,12 @@ svg {
   display: block;
 }
 
+#main {
+  background-color: #d2f3ff;
+}
+
 .county {
-  stroke: lightgray;
+  stroke: #ffffff;
 }
 
 .formDiv {
@@ -45,6 +49,10 @@ p {
   margin: 15px;
   border: 1px solid black;
   width: 280px;
+}
+
+.form-field:first-child {
+  margin-top: 0px;
 }
 
 .form-field h3 {

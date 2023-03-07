@@ -153,7 +153,7 @@
       .join("path")
       .attr("class", "county")
       .attr("d", path)
-      .attr("fill", "darkgray")
+      .attr("fill", "#e8e8e8")
       .on("click", clickedOn)
 
     let button = document.getElementById("button");
@@ -338,7 +338,7 @@
         .attr("r", 6 / k)
         .attr('cx', d => d["coords"][0])
         .attr("cy", d => d["coords"][1])
-        .attr("fill", "blue")
+        .attr("fill", "#588bca")
         .attr("opacity", 0.7)
 
       circles.on("mouseover", function (d) {
@@ -353,7 +353,7 @@
       circles.on("mouseout", function (d) {
         let circle = d3.select(this)
         circle.attr("r", circle.attr("r") / 1.5)
-          .attr("fill", "blue")
+          .attr("fill", "#588bca")
         mouseover.style("visibility", "hidden");
         updateMouseout();
 
