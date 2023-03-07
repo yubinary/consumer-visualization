@@ -153,7 +153,7 @@
       .join("path")
       .attr("class", "county")
       .attr("d", path)
-      .attr("fill", "#e8e8e8")
+      .attr("fill", "#efeeea")
       .on("click", clickedOn)
 
     let button = document.getElementById("button");
@@ -292,7 +292,7 @@
       .attr("r", 6 / k)
       .attr('cx', d => d["coords"][0])
       .attr("cy", d => d["coords"][1])
-      .attr("fill", "blue")
+      .attr("fill", "#fd3a5d")
       .attr("opacity", 0.7)
     // zooming interactivity
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
@@ -342,14 +342,18 @@
         .attr("r", 6 / k)
         .attr('cx', d => d["coords"][0])
         .attr("cy", d => d["coords"][1])
-        .attr("fill", "#588bca")
+        .attr("fill", "#58aaca")
         .attr("opacity", 0.7)
+        .style("stroke", "white");
 
       circles.on("mouseover", function (d) {
         let circle = d3.select(this)
         console.log(this.cx)
         circle.attr("r", circle.attr("r") * 1.5)
-          .attr("fill", "green")
+          .attr("fill", "#fd3a5d")
+          .style("stroke", "white")
+          .attr("opacity", 1)
+          .style("filter", "drop-shadow(0px 0px 5px rgba(167, 167, 167))");
         mouseover.style("visibility", "visible");
         updateMouseover(circle.datum());
       });
@@ -357,7 +361,11 @@
       circles.on("mouseout", function (d) {
         let circle = d3.select(this)
         circle.attr("r", circle.attr("r") / 1.5)
-          .attr("fill", "#588bca")
+          .attr("fill", "#58aaca")
+          .style("stroke", "none")
+          .attr("opacity", 0.7)
+          .style("filter", "none")
+          .style("stroke", "white");
         mouseover.style("visibility", "hidden");
         updateMouseout();
 
