@@ -38,6 +38,8 @@
 </head>
 
 <body>
+  <svg id="sales" height=300 width=500></svg>
+  <svg id="rent" height=300 width=500></svg>
   <h1>Discover Most Suitable Property in <b>Pittsburg, PA</b></h1>
   <div class="flex">
     <svg id="main" height=700 width=900></svg>
@@ -128,8 +130,6 @@
     </div>
 
   </div>
-  <svg id="sales" height=300 width=500></svg>
-  <svg id="rent" height=300 width=500></svg>
 </body>
 
 <script>
@@ -262,6 +262,10 @@
       }
     });
 
+    let resetButton = document.getElementById("reset-button");
+    resetButton.addEventListener('click', () => {
+      document.getElementById("form").reset();
+    });
 
     // display info 
     function displayText(address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year) {
