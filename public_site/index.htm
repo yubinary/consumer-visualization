@@ -97,6 +97,7 @@
       .attr("class", "county")
       .attr("d", path)
       .attr("fill", "darkgray")
+      .on("click", clickedOn)
 
     let button = document.getElementById("button");
     button.addEventListener('click', () => {
@@ -219,19 +220,48 @@
       document.getElementById("year").innerHTML = year;
 
     }
+    //repeated drawing for zooming
+    data.forEach((d, i) => {
+      d["coords"] = projection([d['Longitude'], d["Latitude"]]);
+    })
+    var k = 1;
+    let circles = mainMap.selectAll("circle").data(data)
+      .join("circle")
+      .attr("class", "circle")
+      .attr("r", 6 / k)
+      .attr('cx', d => d["coords"][0])
+      .attr("cy", d => d["coords"][1])
+      .attr("fill", "blue")
+      .attr("opacity", 0.7)
+    // zooming interactivity
+    var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
+    map.call(zoom);
+
+    function zoomed(event) {
+      mainMap.attr("transform", event.transform);
+      neighbors.attr("stroke-width", 1 / event.transform.k)
+      circles.attr("r", 6 / event.transform.k)
+      k = event.transform.k
+    };
+
+    //clicking on neighborhoods to zoom
+    //reference: https://observablehq.com/@d3/zoom-to-bounding-box
+    function clickedOn(event, d) {
+      const [[x1, y1], [x2, y2]] = path.bounds(d);
+      event.stopPropagation();
+      neighbors.transition().style("fill", null);
+      d3.select(this).transition().style("fill", "red");
+      mainMap.transition().duration(550).call(
+        zoom.transform,
+        d3.zoomIdentity
+          .translate(mapWidth / 2, mapHeight / 2)
+          .scale(Math.min(10, 0.7 / Math.max((x2 - x1) / mapWidth, (y2 - y1) / mapHeight)))
+          .translate(-(x1 + x2) / 2, -(y1 + y2) / 2),
+        d3.pointer(event, mainMap.node())
+      );
+    }
 
     function renderHouse(data) {
-      // zooming interactivity
-      var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
-      map.call(zoom);
-      var k = 1;
-      function zoomed(event) {
-        mainMap.attr("transform", event.transform);
-        neighbors.attr("stroke-width", 1 / event.transform.k)
-        circles.attr("r", 6 / event.transform.k)
-        k = event.transform.k
-      };
-
       //House data points
       data.forEach((d, i) => {
         d["coords"] = projection([d['Longitude'], d["Latitude"]]);
