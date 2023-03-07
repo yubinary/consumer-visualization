@@ -325,7 +325,7 @@
           .translate(translate[0], translate[1])
           .scale(scale);
         neighbors.transition().style("fill", null);
-        d3.select(this).transition().style("fill", "red");
+        d3.select(this).transition().style("fill", "#c8c8c8");
         map.transition().duration(550).call(zoom.transform, newTransform);
       }
       clicked = this;
