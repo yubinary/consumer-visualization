@@ -5,7 +5,6 @@ body {
 .flex {
   display: flex;
   justify-content: center;
-
 }
 
 svg {
@@ -18,6 +17,13 @@ svg {
 
 .formDiv {
   position: relative;
+}
+
+h1 {
+  font-weight: 100;
+  font-size: 25px;
+  text-align: center;
+  padding-top: 20px;
 }
 
 h3 {
@@ -44,18 +50,20 @@ p {
 .form-field h3 {
   margin: 10px;
   margin-bottom: 10px;
+  font-size: 15px;
 }
 
 .form-field p {
   margin: 10px 10px;
+  font-size: 14px;
 }
 
 .form-field label {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .form-field .checkbox {
-  margin: 10px 0px;
+  margin: 5px 0px;
 }
 
 .form-field .range {
@@ -81,7 +89,7 @@ p {
 
 #button,
 #reset-button {
-  background-color: #4c78af;
+  background-color: #588bca;
   border: none;
   color: white;
   text-align: center;
@@ -89,6 +97,18 @@ p {
   font-size: 15px;
   margin: 0px;
   padding: 15px 33px;
+}
+
+#button:hover {
+  background-color: #3f6491;
+}
+
+#reset-button {
+  background-color: #58aaca;
+}
+
+#reset-button:hover {
+  background-color: rgb(55, 123, 129);
 }
 
 .no-border {

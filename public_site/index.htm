@@ -38,12 +38,9 @@
 </head>
 
 <body>
-  <svg id="sales" height=300 width=500></svg>
-  <svg id="rent" height=300 width=500></svg>
+  <h1>Discover Most Suitable Property in <b>Pittsburg, PA</b></h1>
   <div class="flex">
-
-    <svg id="main" height=900 width=1100></svg>
-
+    <svg id="main" height=700 width=900></svg>
 
     <div>
       <div class="formDiv">
@@ -70,22 +67,22 @@
           <div class="form-field">
             <h3>Rooms</h3>
             <p>Bedroom</p>
-            <input type="radio" id="bed1" name="bedroom" value="0">0
-            <input type="radio" id="bed1" name="bedroom" value="1">1
-            <input type="radio" id="bed2" name="bedroom" value="2">2
-            <input type="radio" id="bed3" name="bedroom" value="3">3
-            <input type="radio" id="bed4" name="bedroom" value="4">4
-            <input type="radio" id="bed5" name="bedroom" value="5">5+
+            <input type="radio" id="bed0" name="bedroom" value="0"><label for=bed0">0</label>
+            <input type="radio" id="bed1" name="bedroom" value="1"><label for=bed1">1</label>
+            <input type="radio" id="bed2" name="bedroom" value="2"><label for=bed2">2</label>
+            <input type="radio" id="bed3" name="bedroom" value="3"><label for=bed3">3</label>
+            <input type="radio" id="bed4" name="bedroom" value="4"><label for=bed4">4</label>
+            <input type="radio" id="bed5" name="bedroom" value="5"><label for=bed5">5+</label>
             <p>Bathroom</p>
-            <input type="radio" id="bath1" name="bathroom" value="1">1
-            <input type="radio" id="bath2" name="bathroom" value="2">2
-            <input type="radio" id="bath3" name="bathroom" value="3">3
-            <input type="radio" id="bath4" name="bathroom" value="4">4
-            <input type="radio" id="bath5" name="bathroom" value="5">5+
+            <input type="radio" id="bath1" name="bathroom" value="1"><label for=bath1">1</label>
+            <input type="radio" id="bath2" name="bathroom" value="2"><label for=bath2">2</label>
+            <input type="radio" id="bath3" name="bathroom" value="3"><label for=bath3">3</label>
+            <input type="radio" id="bath4" name="bathroom" value="4"><label for=bath4">4</label>
+            <input type="radio" id="bath5" name="bathroom" value="5"><label for=bath5">5</label>
             <p>Total Room</p>
             <div class="range">
-              <input type="text" id="minRoom" name="minRoom">
-              <input type="text" id="maxRoom" name="maxRoom">
+              <input type="text" id="minRoom" name="minRoom" placeholder="Min Room">
+              <input type="text" id="maxRoom" name="maxRoom" placeholder="Max Room">
             </div>
           </div>
           <div class="form-field">
@@ -99,8 +96,8 @@
               <label for=rent">For Rent</label>
             </div>
             <div class="range">
-              <input type="text" id="minPrice" name="minPrice">
-              <input type="text" id="maxPrice" name="maxPrice">
+              <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
+              <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
             </div>
           </div>
           <div class="form-button">
@@ -131,7 +128,8 @@
     </div>
 
   </div>
-
+  <svg id="sales" height=300 width=500></svg>
+  <svg id="rent" height=300 width=500></svg>
 </body>
 
 <script>
