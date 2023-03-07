@@ -12,55 +12,9 @@
 <body>
   <div class="flex">
     <svg id="main" height=900 width=1100></svg>
-    <svg id="svg" height="400" width="300"> </svg>
-
-    <form id="form">
-      <div class="form-field">
-        <h3>Category</h3>
-        <input type="checkbox" id="single" name="category" value="SingleFamily">Single
-        <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">Multiple
-        <input type="checkbox" id="townhouse" name="category" value="Townhouse">Townhouse
-        <input type="checkbox" id="condo" name="category" value="Condominium">Condominium
-      </div>
-      <div class="form-field">
-        <h3>Rooms</h3>
-        <p>Bedroom</p>
-        <input type="radio" id="bed1" name="bedroom" value="0">0
-        <input type="radio" id="bed1" name="bedroom" value="1">1
-        <input type="radio" id="bed2" name="bedroom" value="2">2
-        <input type="radio" id="bed3" name="bedroom" value="3">3
-        <input type="radio" id="bed4" name="bedroom" value="4">4
-        <input type="radio" id="bed5" name="bedroom" value="5">5+
-        <p>Bathroom</p>
-        <input type="radio" id="bath1" name="bathroom" value="1">1
-        <input type="radio" id="bath2" name="bathroom" value="2">2
-        <input type="radio" id="bath3" name="bathroom" value="3">3
-        <input type="radio" id="bath4" name="bathroom" value="4">4
-        <input type="radio" id="bath5" name="bathroom" value="5">5+
-        <p>Total Room</p>
-        <input type="text" id="minRoom" name="minRoom">
-        <input type="text" id="maxRoom" name="maxRoom">
-      </div>
-      <div class="form-field">
-        <h3>Price Range</h3>
-        <input type="radio" id="sales" name="type" value="sales">For Sales
-        <input type="radio" id="rent" name="type" value="rent">For Rent
-        <br />
-        <input type="text" id="minPrice" name="minPrice">
-        <input type="text" id="maxPrice" name="maxPrice">
-      </div>
-      <div class="form-field">
-        <input type="button" id="button" value="Apply Filter">
-      </div>
-      <div class="form-result">
-        <ul id="top-house"></ul>
-      </div>
-    </form>
-  </div>
-
-    <!-- information about the house !--> 
+    <!-- information about the house !-->
     <div class="infobox">
-      <p> Hover over circles to view details!</p> 
+      <p> Hover over circles to view details!</p>
       <p>Address: <span id="address"></span></p>
       <p>Number of bedroom(s): <span id="bedroom"></span></p>
       <p>Number of bathroom(s): <span id="bathroom"></span></p>
@@ -71,7 +25,54 @@
       <p>Finished size: <span id="finishedsize"></span></p>
       <p>Year built: <span id="year"></span></p>
     </div>
+    <div class="formDiv">
+      <form id="form">
+        <div class="form-field">
+          <h3>Category</h3>
+          <input type="checkbox" id="single" name="category" value="SingleFamily">Single
+          <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">Multiple
+          <input type="checkbox" id="townhouse" name="category" value="Townhouse">Townhouse
+          <p>
+          </p>
+          <input type="checkbox" id="condo" name="category" value="Condominium">Condominium
+        </div>
+        <div class="form-field">
+          <h3>Rooms</h3>
+          <p>Bedroom</p>
+          <input type="radio" id="bed1" name="bedroom" value="0">0
+          <input type="radio" id="bed1" name="bedroom" value="1">1
+          <input type="radio" id="bed2" name="bedroom" value="2">2
+          <input type="radio" id="bed3" name="bedroom" value="3">3
+          <input type="radio" id="bed4" name="bedroom" value="4">4
+          <input type="radio" id="bed5" name="bedroom" value="5">5+
+          <p>Bathroom</p>
+          <input type="radio" id="bath1" name="bathroom" value="1">1
+          <input type="radio" id="bath2" name="bathroom" value="2">2
+          <input type="radio" id="bath3" name="bathroom" value="3">3
+          <input type="radio" id="bath4" name="bathroom" value="4">4
+          <input type="radio" id="bath5" name="bathroom" value="5">5+
+          <p>Total Room</p>
+          <input type="text" id="minRoom" name="minRoom">
+          <input type="text" id="maxRoom" name="maxRoom">
+        </div>
+        <div class="form-field">
+          <h3>Price Range</h3>
+          <input type="radio" id="sales" name="type" value="sales">For Sales
+          <input type="radio" id="rent" name="type" value="rent">For Rent
+          <br />
+          <input type="text" id="minPrice" name="minPrice">
+          <input type="text" id="maxPrice" name="maxPrice">
+        </div>
+        <div class="form-field">
+          <input type="button" id="button" value="Apply Filter">
+        </div>
+        <div class="form-result">
+          <ul id="top-house"></ul>
+        </div>
+      </form>
+    </div>
 
+  </div>
 </body>
 
 <script>
@@ -189,7 +190,7 @@
       newData.sort(compare);
       let topFive = newData.slice(0, 5);
       var ul = document.getElementById('top-house');
-      ul.innerHTML = "";
+      ul.innerHTML = "Top 5 House Suggestions:";
       for (let i = 0; i < 5; i++) {
         ul.innerHTML += '<li><p>' + topFive[i]["Street Address"] + '</p></li>';
       }
@@ -260,25 +261,18 @@
         .attr("class", "mouseover")
         .attr("visibility", "hidden")
 
-      let info = mouseover.append("text")
-        .attr("class", "mouseover-text")
-        .attr("x", 100)
-        .attr("y", 100);
-
       function updateMouseover(d) {
-        //AddressInfo = `Address: ${d["Street Address"]}`
-        //info.text(AddressInfo)
         format = d3.format(",");
-       //address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year
-        displayText(d["Street Address"],d["Bedrooms"],d["Bathroom"],d["Total Rooms"],format(d["Sale Amount"]),format(d["Rent Amount"]),format(d["Lot Size (Sq.Ft.)"]),
-        format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
+        //address, bedroom, bathroom, roomnum, sales, rent, lotsize, finish, year
+        displayText(d["Street Address"], d["Bedrooms"], d["Bathroom"], d["Total Rooms"], format(d["Sale Amount"]), format(d["Rent Amount"]), format(d["Lot Size (Sq.Ft.)"]),
+          format(d["Finished Size (Sq.Ft.)"]), d["Year Built"]);
       }
 
     }
 
     // render house on the map
     renderHouse(data);
-    
+
   }
 
   drawMap();
