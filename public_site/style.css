@@ -11,7 +11,7 @@ svg {
 .filter {}
 
 .county {
-  background-color: green;
+  stroke: lightgray;
 }
 
 .infobox {
