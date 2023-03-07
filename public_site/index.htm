@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <head>
+  <link rel="shortcut icon" href="#" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -71,7 +72,6 @@
         </div>
       </form>
     </div>
-
   </div>
 </body>
 
@@ -80,7 +80,8 @@
   const margins = { t: 20, r: 30, b: 20, l: 30 }
   const mapWidth = map.attr("width") - margins.l - margins.r
   const mapHeight = map.attr("height") - margins.t - margins.b
-
+  const mainMap = map.append("g")
+    .attr("transform", `translate(${margins.l},${margins.t})`)
 
   let drawMap = async function () {
     let data = await d3.csv("./datasets/zillow_pittsburgh_csv.csv")
@@ -88,6 +89,14 @@
 
     let pittcounties = await d3.json("./datasets/pittsburghpaneighborhoods-.json")
     console.log(pittcounties)
+    // create Penn map
+    let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
+    let path = d3.geoPath().projection(projection);
+    let neighbors = mainMap.selectAll("path.county").data(pittcounties.features)
+      .join("path")
+      .attr("class", "county")
+      .attr("d", path)
+      .attr("fill", "darkgray")
 
     let button = document.getElementById("button");
     button.addEventListener('click', () => {
@@ -212,51 +221,17 @@
     }
 
     function renderHouse(data) {
-      const mainMap = map.append("g")
-        .attr("transform", `translate(${margins.l},${margins.t})`)
-        .on("click", reset);
-      //clicking on neighborhoods
-      function clicked(event, d) {
-        const [[x0, y0], [x1, y1]] = path.bounds(d);
-        event.stopPropagation();
-        neighbors.transition().style("fill", null);
-        d3.select(this).transition().style("fill", "red");
-        mainMap.transition().duration(750).call(
-          zoom.transform,
-          d3.zoomIdentity
-            .translate(mapWidth / 2, mapHeight / 2)
-            .scale(Math.min(10, 0.9 / Math.max((x1 - x0) / mapWidth, (y1 - y0) / mapHeight)))
-            .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-          d3.pointer(event, mainMap.node())
-        );
-      }
-      // create Penn map
-      let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
-      let path = d3.geoPath().projection(projection);
-      let neighbors = mainMap.selectAll("path.county").data(pittcounties.features)
-        .join("path")
-        .attr("class", "county")
-        .attr("d", path)
-        .attr("fill", "darkgray")
-        .on("click", clicked)
       // zooming interactivity
       var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
       map.call(zoom);
       var k = 1;
       function zoomed(event) {
         mainMap.attr("transform", event.transform);
-        circles.attr("r", 5 / event.transform.k)
+        neighbors.attr("stroke-width", 1 / event.transform.k)
+        circles.attr("r", 6 / event.transform.k)
         k = event.transform.k
       };
-      //zoom reset
-      function reset() {
-        neighbors.transition().style('fill', null);
-        mainMap.transition().duration(750).call(
-          zoom.transform,
-          d3.zoomIdentity,
-          d3.zoomTransform(mainMap.node()).invert([mapWidth / 2, mapHeight / 2])
-        );
-      }
+
       //House data points
       data.forEach((d, i) => {
         d["coords"] = projection([d['Longitude'], d["Latitude"]]);
@@ -264,7 +239,7 @@
       let circles = mainMap.selectAll("circle").data(data)
         .join("circle")
         .attr("class", "circle")
-        .attr("r", 5 / k)
+        .attr("r", 6 / k)
         .attr('cx', d => d["coords"][0])
         .attr("cy", d => d["coords"][1])
         .attr("fill", "blue")
