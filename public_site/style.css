@@ -17,6 +17,7 @@ svg {
 .infobox {
   border: 2px solid black;
   background-color: lightgray;
+  height: 400px;
 }
 
 .formDiv {
@@ -36,3 +37,4 @@ input {
 p {
   margin-left: 10px;
 }
+
