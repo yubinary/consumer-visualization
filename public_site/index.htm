@@ -278,8 +278,9 @@
       circles.attr("r", 6 / event.transform.k)
       k = event.transform.k
     };
-
-    //clicking on neighborhoods to zoom
+    //holder variable of what was clicked
+    var clicked;
+    //clicking on neighborhoods to zoom and clicking on same neighborhood to unzoom
     function clickedOn(event, d) {
       let bounds = path.bounds(d.geometry);
       let widthx = bounds[1][0] - bounds[0][0];
@@ -288,12 +289,20 @@
       let y = (bounds[0][1] + bounds[1][1]) / 2;
       let scale = Math.max(1, Math.min(10, 0.9 / Math.max(widthx / mapWidth, widthy / mapHeight)));
       let translate = [mapWidth / 2 - x * scale, mapHeight / 2 - y * scale];
-      let newTransform = d3.zoomIdentity
-        .translate(translate[0], translate[1])
-        .scale(scale);
-      neighbors.transition().style("fill", null);
-      d3.select(this).transition().style("fill", "red");
-      map.transition().duration(550).call(zoom.transform, newTransform);
+      if (clicked == this) {
+        neighbors.transition().style("fill", null);
+        let newTransform = d3.zoomIdentity.translate((mapWidth / 30) - 50, (mapHeight / 30) - 50)
+        map.transition().duration(550).call(zoom.transform, newTransform);
+        console.log("done")
+      } else {
+        let newTransform = d3.zoomIdentity
+          .translate(translate[0], translate[1])
+          .scale(scale);
+        neighbors.transition().style("fill", null);
+        d3.select(this).transition().style("fill", "red");
+        map.transition().duration(550).call(zoom.transform, newTransform);
+      }
+      clicked = this;
     }
 
     function renderHouse(data) {
