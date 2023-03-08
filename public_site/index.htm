@@ -404,28 +404,28 @@
 
     // 2. make the dictionary of counts for the price: tick: 20 
     // Sales price 
-    saleDict["38464"] = 0, saleDict["224236.22"] = 0, saleDict["410008.44"] = 0, saleDict["595780.66"] = 0, saleDict["781552.88"] = 0;
-    saleDict["967325.1"] = 0, saleDict["1156097.32"] = 0, saleDict["1344870.54"] = 0, saleDict["1533643.76"] = 0, saleDict["1710414"] = 0;
+    saleDict["38464"] = 0, saleDict["224236"] = 0, saleDict["410008"] = 0, saleDict["595780"] = 0, saleDict["781552"] = 0;
+    saleDict["967325"] = 0, saleDict["1156097"] = 0, saleDict["1344870"] = 0, saleDict["1533643"] = 0, saleDict["1710414"] = 0;
 
     for (let i = 0; i < saleAmount.length; i++) {
       if (saleAmount[i] > 1710414) {
         saleDict["1710414"] += 1
       } else if (saleAmount[i] > 1533643.76) {
-        saleDict["1533643.76"] += 1
+        saleDict["1533643"] += 1
       } else if (saleAmount[i] > 1344870.54) {
-        saleDict["1344870.54"] += 1
+        saleDict["1344870"] += 1
       } else if (saleAmount[i] > 1156097.32) {
-        saleDict["1156097.32"] += 1
+        saleDict["1156097"] += 1
       } else if (saleAmount[i] > 967325.1) {
-        saleDict["967325.1"] += 1
+        saleDict["967325"] += 1
       } else if (saleAmount[i] > 781552.88) {
-        saleDict["781552.88"] += 1
+        saleDict["781552"] += 1
       } else if (saleAmount[i] > 595780.66) {
-        saleDict["595780.66"] += 1
+        saleDict["595780"] += 1
       } else if (saleAmount[i] > 410008.44) {
-        saleDict["410008.44"] += 1
+        saleDict["410008"] += 1
       } else if (saleAmount[i] > 224236.22) {
-        saleDict["224236.22"] += 1
+        saleDict["224236"] += 1
       } else if (saleAmount[i] > 38464) {
         saleDict["38464"] += 1
       } 
@@ -437,7 +437,7 @@
 
     for (let i = 0; i < rentAmount.length; i++) {
       if (rentAmount[i] > 3774) {
-        rentDict["3774"] += 1
+        rentDict["3774"] += 1 //3774
       } else if (rentAmount[i] > 3444) {
         rentDict["3444"] += 1
       } else if (rentAmount[i] > 3114) {
