@@ -7,8 +7,8 @@ body {
   justify-content: center;
 }
 
-.inline{
-  display:flex;
+.inline {
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -19,6 +19,7 @@ svg {
 
 #main {
   background-color: #dbeacb;
+  margin-bottom: 16px;
 }
 
 .county {
@@ -28,6 +29,7 @@ svg {
 .formDiv {
   position: relative;
   display: inline-block;
+  vertical-align: top;
 }
 
 h1 {
@@ -51,9 +53,8 @@ p {
 
 .form-field,
 .form-button {
-  padding: 10px;
-  padding-bottom: 20px;
-  margin: 15px;
+  padding: 10px 5px;
+  margin: 19px 15px;
   border: 1px solid black;
   width: 280px;
 }
@@ -62,14 +63,17 @@ p {
   margin-top: 0px;
 }
 
+.form-field:last-child {
+  margin-bottom: 0px;
+}
+
 .form-field h3 {
-  margin: 10px;
-  margin-bottom: 10px;
+  margin: 0px 10px;
   font-size: 15px;
 }
 
 .form-field p {
-  margin: 10px 10px;
+  margin: 3px 10px;
   font-size: 14px;
 }
 
@@ -78,7 +82,7 @@ p {
 }
 
 .form-field .checkbox {
-  margin: 5px 0px;
+  margin: 3px 0px;
 }
 
 .form-field .range {
@@ -140,8 +144,7 @@ p {
   bottom: 0px;
   background-color: rgba(255, 255, 255, 0.8);
   justify-content: center;
-
-
+  margin-bottom: 31px;
 }
 
 #salesamount {
@@ -193,5 +196,5 @@ p {
 
 .container {
   position: relative;
-  display:inline-block;
+  display: inline-block;
 }
