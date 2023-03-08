@@ -14,26 +14,25 @@
 
 
 <body>
-  <svg id="sales" height=300 width=500></svg>
-  <svg id="rent" height=300 width=500></svg>
-
   <h1>Discover Most Suitable Property in <b>Pittsburg, PA</b></h1>
 
-  <div class="container">
-    <!-- information about the house !-->
-    <div class="infobox">
-      <div class="price">
-        <p class="info"><span id="salesamount"></span> <Span class="for"> FOR SALE · </span><span
-            id="rentamount"></span> <span class="for">FOR RENT</span> </p>
-      </div>
-      <p class="info2"><span id="address"></span></p>
-      <hr>
-      <p>🛏 <span id="bedroom"></span>🛁 <span id="bathroom"></span>🚪 <span id="roomnum"></span></p>
-      <p class="info">◼️ lot <span id="lotsize"></span> ◼️ finished <span id="finishedsize"></span></p>
-      <p class="info">🏗 Built in <span id="year"></span></p>
-    </div>
+  <div>
     <div class="flex">
-      <svg id="main" height=700 width=900></svg>
+      <div class="container">
+        <!-- information about the house !-->
+        <div class="infobox">
+          <div class="price">
+            <p class="info"><span id="salesamount"></span> <Span class="for"> FOR SALE · </span><span
+                id="rentamount"></span> <span class="for">FOR RENT</span> </p>
+          </div>
+          <p class="info2"><span id="address"></span></p>
+          <hr>
+          <p>🛏 <span id="bedroom"></span>🛁 <span id="bathroom"></span>🚪 <span id="roomnum"></span></p>
+          <p class="info">◼️ lot <span id="lotsize"></span> ◼️ finished <span id="finishedsize"></span></p>
+          <p class="info">🏗 Built in <span id="year"></span></p>
+        </div>
+        <svg id="main" height=700 width=900></svg>
+      </div>
       <div>
         <div class="formDiv">
           <form id="form">
@@ -80,13 +79,15 @@
             <div class="form-field">
               <h3>Price Range</h3>
               <div class="checkbox">
-                <input type="radio" id="sales" name="type" value="sales">
+                <input type="radio" id="sales" name="type" value="sales" checked>
                 <label for=sales">For Sale</label>
               </div>
               <div class="checkbox">
                 <input type="radio" id="rent" name="type" value="rent">
                 <label for="rent">For Rent</label>
               </div>
+              <svg id="salesSvg" height=300 width=500></svg>
+              <svg id="rentSvg" height=300 width=500></svg>
               <div class="range">
                 <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
                 <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
@@ -95,9 +96,6 @@
             <div class="form-button">
               <input type="button" id="button" value="Apply Filter">
               <input type="button" id="reset-button" value="Reset Filter">
-            </div>
-            <div class="form-result">
-              <ul id="top-house"></ul>
             </div>
           </form>
         </div>
@@ -120,6 +118,7 @@
 
     let pittcounties = await d3.json("./datasets/pittsburghpaneighborhoods-.json")
     console.log(pittcounties)
+
     // create Penn map
     let projection = d3.geoMercator().fitSize([mapWidth, mapHeight], pittcounties);
     let path = d3.geoPath().projection(projection);
@@ -129,6 +128,18 @@
       .attr("d", path)
       .attr("fill", "#efeeea")
       .on("click", clickedOn)
+
+    let checkedRadio = document.querySelector('input[name="type"]:checked');
+    let forSale = document.getElementById("sales");
+    let forRent = document.getElementById("rent");
+    forRent.addEventListener('click', () => {
+      document.getElementById("salesSvg").style.display = "none";
+      document.getElementById("rentSvg").style.display = "block";
+    });
+    forSale.addEventListener('click', () => {
+      document.getElementById('salesSvg').style.display = "block";
+      document.getElementById("rentSvg").style.display = "none";
+    });
 
     let button = document.getElementById("button");
     button.addEventListener('click', () => {
@@ -201,7 +212,6 @@
       // re-render house by filtered data
       var newData = data;
       if (category.length > 0) {
-        console.log(category)
         newData = newData.filter(filterByCategory);
       }
       if (bedroom) {
@@ -218,22 +228,6 @@
       }
       renderHouse(newData);
 
-      // sort the filtered data
-      // priority: Finished size (desc) > Lot size (desc) > “Year built” (desc)
-      function compare(a, b) {
-        return b["Finished Size (Sq.Ft.)"].localeCompare(a["Finished Size (Sq.Ft.)"], undefined, { 'numeric': true })
-          || b["Lot Size (Sq.Ft.)"].localeCompare(a["Lot Size (Sq.Ft.)"], undefined, { 'numeric': true })
-          || b["Year Built"] - a["Year Built"];
-      }
-
-      // display top 5 houses
-      newData.sort(compare);
-      let topFive = newData.slice(0, 5);
-      var ul = document.getElementById('top-house');
-      ul.innerHTML = "Top 5 House Suggestions:";
-      for (let i = 0; i < 5; i++) {
-        ul.innerHTML += '<li><p>' + topFive[i]["Street Address"] + '</p></li>';
-      }
     });
 
     let resetButton = document.getElementById("reset-button");
@@ -295,7 +289,6 @@
         neighbors.transition().style("fill", null);
         let newTransform = d3.zoomIdentity.translate((mapWidth / 30) - 50, (mapHeight / 30) - 50)
         map.transition().duration(550).call(zoom.transform, newTransform);
-        console.log("done")
       } else {
         let newTransform = d3.zoomIdentity
           .translate(translate[0], translate[1])
@@ -346,7 +339,6 @@
           mouseover.style("visibility", "hidden");
           updateMouseout();
         } else {
-          console.log(this.cx)
           circle.attr("r", circle.attr("r") * 1.5)
             .attr("fill", "#fd3a5d")
             .style("stroke", "white")
@@ -395,10 +387,6 @@
 
     saleAmount.sort((a, b) => a - b);
     rentAmount.sort((a, b) => a - b);
-
-    console.log(rentAmount); // 804 ~ 3810
-    console.log(saleAmount); // 38464 ~ 1710414
-
 
     // 2. make the dictionary of counts for the price: tick: 20 
     // Sales price 
@@ -465,12 +453,9 @@
       rentDict[key] += 40;
     }
 
-    console.log(saleDict);
-    console.log(rentDict)
-
     // 2. set up the svg for Sales Amount bar Charts
 
-    var svg = d3.select("#sales"),
+    var svg = d3.select("#salesSvg"),
       margin = { top: 20, right: 20, bottom: 30, left: 40 },
       width = +svg.attr("width") - margin.left - margin.right,
       height = +svg.attr("height") - margin.top - margin.bottom
@@ -510,9 +495,9 @@
       .attr('x', 200)
       .attr('y', 20)
       .attr('text-anchor', 'middle')
-      .text('Price Range (Sales Amount)');
+    // .text('Price Range (Sales Amount)');
 
-    var svg2 = d3.select("#rent"),
+    var svg2 = d3.select("#rentSvg"),
       margin2 = { top: 20, right: 20, bottom: 30, left: 40 },
       width2 = +svg.attr("width") - margin2.left - margin2.right,
       height2 = +svg.attr("height") - margin2.top - margin2.bottom
@@ -557,7 +542,7 @@
       .attr('x', 200)
       .attr('y', 20)
       .attr('text-anchor', 'middle')
-      .text('Price Range (Rent Amount)');
+    // .text('Price Range (Rent Amount)');
 
   }
 

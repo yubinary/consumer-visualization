@@ -97,7 +97,7 @@ p {
 
 #button,
 #reset-button {
-  background-color: #588bca;
+  background-color: #fd3a5d;
   border: none;
   color: white;
   text-align: center;
@@ -108,7 +108,7 @@ p {
 }
 
 #button:hover {
-  background-color: #3f6491;
+  background-color: #dd3453;
 }
 
 #reset-button {
@@ -130,19 +130,20 @@ p {
   border: 1px solid black;
   width: 300px;
   position: absolute;
-  background-color: rgba(255, 255 , 255, 0.8);
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.8);
 
 }
 
 #salesamount {
   font-size: 25px;
   font-weight: 600;
-  color: #58aaca;
+  color: #fd3a5d;
   margin: 0px;
   padding: 0px;
 }
 
-#address{
+#address {
   color: gray;
   margin: 0px;
 
@@ -153,14 +154,15 @@ p {
   padding: 0px;
 }
 
-.price { 
+.price {
   vertical-align: middle;
 
 }
+
 .info2 {
   margin: 12px 0px 0px 10px;
   padding: 0px;
-  
+
 }
 
 .for {
@@ -173,11 +175,13 @@ p {
   color: bla
 }
 
-#bedroom, #bathroom, #lotsize, #roomnum{
+#bedroom,
+#bathroom,
+#lotsize,
+#roomnum {
   margin-right: 15px;
 }
 
-.container{
+.container {
   position: relative;
 }
-
