@@ -114,7 +114,7 @@
 
       <!-- information about the house !-->
       <div>
-        <p> Hover over circles to view details!</p>
+        <p> Click a circle to view details!</p>
         <div class="infobox">
           <div class="price">
             <p><span id="salesamount"></span> for sale (<span id="rentamount"></span> for rent)</p>
@@ -346,30 +346,41 @@
         .attr("opacity", 0.7)
         .style("stroke", "white");
 
-      circles.on("mouseover", function (d) {
+      //clicked circle placeholder
+      var clickedCircle
+      circles.on("click", function (d) {
+        mainMap.selectAll("circle").data(data)
+          .join("circle")
+          .attr("class", "circle")
+          .attr("r", 6 / k)
+          .attr('cx', d => d["coords"][0])
+          .attr("cy", d => d["coords"][1])
+          .attr("fill", "#588bca")
+          .attr("opacity", 0.7)
+          .style("stroke", "white");
         let circle = d3.select(this)
-        console.log(this.cx)
-        circle.attr("r", circle.attr("r") * 1.5)
-          .attr("fill", "#fd3a5d")
-          .style("stroke", "white")
-          .attr("opacity", 1)
-          .style("filter", "drop-shadow(0px 0px 5px rgba(167, 167, 167))");
-        mouseover.style("visibility", "visible");
-        updateMouseover(circle.datum());
+        if (clickedCircle == this) {
+          circle.attr("r", circle.attr("r") / 1.5)
+            .attr("fill", "#58aaca")
+            .style("stroke", "none")
+            .attr("opacity", 0.7)
+            .style("filter", "none")
+            .style("stroke", "white");
+          mouseover.style("visibility", "hidden");
+          updateMouseout();
+        } else {
+          console.log(this.cx)
+          circle.attr("r", circle.attr("r") * 1.5)
+            .attr("fill", "#fd3a5d")
+            .style("stroke", "white")
+            .attr("opacity", 1)
+            .style("filter", "drop-shadow(0px 0px 5px rgba(167, 167, 167))");
+          mouseover.style("visibility", "visible");
+          updateMouseover(circle.datum());
+          clickedCircle = this;
+        }
       });
 
-      circles.on("mouseout", function (d) {
-        let circle = d3.select(this)
-        circle.attr("r", circle.attr("r") / 1.5)
-          .attr("fill", "#58aaca")
-          .style("stroke", "none")
-          .attr("opacity", 0.7)
-          .style("filter", "none")
-          .style("stroke", "white");
-        mouseover.style("visibility", "hidden");
-        updateMouseout();
-
-      })
 
       let mouseover = map.append("g")
         .attr("class", "mouseover")
