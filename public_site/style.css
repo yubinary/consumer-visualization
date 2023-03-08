@@ -122,3 +122,62 @@ p {
 .no-border {
   border: 0px;
 }
+
+.infobox {
+  padding: 10px;
+  padding-bottom: 20px;
+  margin: 15px;
+  border: 1px solid black;
+  width: 300px;
+  position: absolute;
+  background-color: rgba(255, 255 , 255, 0.8);
+
+}
+
+#salesamount {
+  font-size: 25px;
+  font-weight: 600;
+  color: #58aaca;
+  margin: 0px;
+  padding: 0px;
+}
+
+#address{
+  color: gray;
+  margin: 0px;
+
+}
+
+.info {
+  margin: 10px 0px 0px 10px;
+  padding: 0px;
+}
+
+.price { 
+  vertical-align: middle;
+
+}
+.info2 {
+  margin: 12px 0px 0px 10px;
+  padding: 0px;
+  
+}
+
+.for {
+  font-size: 10pt;
+  color: gray;
+
+}
+
+.rentamount {
+  color: bla
+}
+
+#bedroom, #bathroom, #lotsize, #roomnum{
+  margin-right: 15px;
+}
+
+.container{
+  position: relative;
+}
+
