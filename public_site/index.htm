@@ -291,8 +291,9 @@
       let translate = [mapWidth / 2 - x * scale, mapHeight / 2 - y * scale];
       if (clicked == this) {
         neighbors.transition().style("fill", null);
-        let newTransform = d3.zoomIdentity.translate((mapWidth / 30) - 50, (mapHeight / 30) - 50)
+        let newTransform = d3.zoomIdentity.translate((mapWidth / 30) - 10, (mapHeight / 30) - 20)
         map.transition().duration(550).call(zoom.transform, newTransform);
+        d3.select(".district").remove();
       } else {
         let newTransform = d3.zoomIdentity
           .translate(translate[0], translate[1])
@@ -300,6 +301,14 @@
         neighbors.transition().style("fill", null);
         d3.select(this).transition().style("fill", "#c8c8c8");
         map.transition().duration(550).call(zoom.transform, newTransform);
+        d3.select(".district").remove();
+        mainMap.append("text")
+          .attr("class", "district")
+          .attr("x", x - 10)
+          .attr("y", y - 25)
+          .style("font-size", "4px")
+          .style("pointer-events", "none")
+          .text(d.properties.hood)
       }
       clicked = this;
     }
