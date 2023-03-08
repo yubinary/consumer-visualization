@@ -12,101 +12,98 @@
 
 </head>
 
+
 <body>
   <svg id="sales" height=300 width=500></svg>
   <svg id="rent" height=300 width=500></svg>
-  
+
   <h1>Discover Most Suitable Property in <b>Pittsburg, PA</b></h1>
 
-  <div class = "container"> 
-       <!-- information about the house !-->
-        <div class="infobox">
-          <div class="price">
-              <p class="info"><span id="salesamount"></span> <Span class="for"> FOR SALE · </span><span id="rentamount"></span> <span class="for">FOR RENT</span> </p>
-            </div>
-            <p class="info2"><span id="address"></span></p>
-
-                <hr>
-          <p>🛏 <span id="bedroom"></span>🛁 <span id="bathroom"></span>🚪 <span id="roomnum"></span></p>
-          <p class="info">◼️ lot <span id="lotsize"></span> ◼️ finished <span id="finishedsize"></span></p>
-          <p class="info">🏗 Built in <span id="year"></span></p>
-        </div>
-  <div class="flex">
-    <svg id="main" height=700 width=900></svg>
-    <div>
-      <div class="formDiv">
-        <form id="form">
-          <div class="form-field">
-            <h3>Category</h3>
-            <div class="checkbox">
-              <input type="checkbox" id="single" name="category" value="SingleFamily">
-              <label for=SingleFamily">Single</label>
-            </div>
-            <div class="checkbox">
-              <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">
-              <label for=MultiFamily2To4">Multiple</label>
-            </div>
-            <div class="checkbox">
-              <input type="checkbox" id="townhouse" name="category" value="Townhouse">
-              <label for=Townhouse">Townhouse</label>
-            </div>
-            <div class="checkbox">
-              <input type="checkbox" id="condo" name="category" value="Condominium">
-              <label for=Condominium">Condominium</label>
-            </div>
-          </div>
-          <div class="form-field">
-            <h3>Rooms</h3>
-            <p>Bedroom</p>
-            <input type="radio" id="bed0" name="bedroom" value="0"><label for=bed0">0</label>
-            <input type="radio" id="bed1" name="bedroom" value="1"><label for=bed1">1</label>
-            <input type="radio" id="bed2" name="bedroom" value="2"><label for=bed2">2</label>
-            <input type="radio" id="bed3" name="bedroom" value="3"><label for=bed3">3</label>
-            <input type="radio" id="bed4" name="bedroom" value="4"><label for=bed4">4</label>
-            <input type="radio" id="bed5" name="bedroom" value="5"><label for=bed5">5+</label>
-            <p>Bathroom</p>
-            <input type="radio" id="bath1" name="bathroom" value="1"><label for=bath1">1</label>
-            <input type="radio" id="bath2" name="bathroom" value="2"><label for=bath2">2</label>
-            <input type="radio" id="bath3" name="bathroom" value="3"><label for=bath3">3</label>
-            <input type="radio" id="bath4" name="bathroom" value="4"><label for=bath4">4</label>
-            <input type="radio" id="bath5" name="bathroom" value="5"><label for=bath5">5</label>
-            <p>Total Room</p>
-            <div class="range">
-              <input type="text" id="minRoom" name="minRoom" placeholder="Min Room">
-              <input type="text" id="maxRoom" name="maxRoom" placeholder="Max Room">
-            </div>
-          </div>
-          <div class="form-field">
-            <h3>Price Range</h3>
-            <div class="checkbox">
-              <input type="radio" id="sales" name="type" value="sales">
-              <label for=sales">For Sale</label>
-            </div>
-            <div class="checkbox">
-              <input type="radio" id="rent" name="type" value="rent">
-              <label for="rent">For Rent</label>
-            </div>
-            <div class="range">
-              <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
-              <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
-            </div>
-          </div>
-          <div class="form-button">
-            <input type="button" id="button" value="Apply Filter">
-            <input type="button" id="reset-button" value="Reset Filter">
-          </div>
-          <div class="form-result">
-            <ul id="top-house"></ul>
-          </div>
-        </form>
+  <div class="container">
+    <!-- information about the house !-->
+    <div class="infobox">
+      <div class="price">
+        <p class="info"><span id="salesamount"></span> <Span class="for"> FOR SALE · </span><span
+            id="rentamount"></span> <span class="for">FOR RENT</span> </p>
       </div>
-
-
+      <p class="info2"><span id="address"></span></p>
+      <hr>
+      <p>🛏 <span id="bedroom"></span>🛁 <span id="bathroom"></span>🚪 <span id="roomnum"></span></p>
+      <p class="info">◼️ lot <span id="lotsize"></span> ◼️ finished <span id="finishedsize"></span></p>
+      <p class="info">🏗 Built in <span id="year"></span></p>
     </div>
-    
-
+    <div class="flex">
+      <svg id="main" height=700 width=900></svg>
+      <div>
+        <div class="formDiv">
+          <form id="form">
+            <div class="form-field">
+              <h3>Category</h3>
+              <div class="checkbox">
+                <input type="checkbox" id="single" name="category" value="SingleFamily">
+                <label for=SingleFamily">Single</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="multiple" name="category" value="MultiFamily2To4">
+                <label for=MultiFamily2To4">Multiple</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="townhouse" name="category" value="Townhouse">
+                <label for=Townhouse">Townhouse</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="condo" name="category" value="Condominium">
+                <label for=Condominium">Condominium</label>
+              </div>
+            </div>
+            <div class="form-field">
+              <h3>Rooms</h3>
+              <p>Bedroom</p>
+              <input type="radio" id="bed0" name="bedroom" value="0"><label for=bed0">0</label>
+              <input type="radio" id="bed1" name="bedroom" value="1"><label for=bed1">1</label>
+              <input type="radio" id="bed2" name="bedroom" value="2"><label for=bed2">2</label>
+              <input type="radio" id="bed3" name="bedroom" value="3"><label for=bed3">3</label>
+              <input type="radio" id="bed4" name="bedroom" value="4"><label for=bed4">4</label>
+              <input type="radio" id="bed5" name="bedroom" value="5"><label for=bed5">5+</label>
+              <p>Bathroom</p>
+              <input type="radio" id="bath1" name="bathroom" value="1"><label for=bath1">1</label>
+              <input type="radio" id="bath2" name="bathroom" value="2"><label for=bath2">2</label>
+              <input type="radio" id="bath3" name="bathroom" value="3"><label for=bath3">3</label>
+              <input type="radio" id="bath4" name="bathroom" value="4"><label for=bath4">4</label>
+              <input type="radio" id="bath5" name="bathroom" value="5"><label for=bath5">5</label>
+              <p>Total Room</p>
+              <div class="range">
+                <input type="text" id="minRoom" name="minRoom" placeholder="Min Room">
+                <input type="text" id="maxRoom" name="maxRoom" placeholder="Max Room">
+              </div>
+            </div>
+            <div class="form-field">
+              <h3>Price Range</h3>
+              <div class="checkbox">
+                <input type="radio" id="sales" name="type" value="sales">
+                <label for=sales">For Sale</label>
+              </div>
+              <div class="checkbox">
+                <input type="radio" id="rent" name="type" value="rent">
+                <label for="rent">For Rent</label>
+              </div>
+              <div class="range">
+                <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
+                <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
+              </div>
+            </div>
+            <div class="form-button">
+              <input type="button" id="button" value="Apply Filter">
+              <input type="button" id="reset-button" value="Reset Filter">
+            </div>
+            <div class="form-result">
+              <ul id="top-house"></ul>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 </body>
 
 <script>
@@ -259,7 +256,7 @@
 
     }
 
-    displayText("Click a circle to view details!","","","","","","","","")
+    displayText("Click a circle to view details!", "", "", "", "", "", "", "", "")
     //repeated drawing for zooming
     data.forEach((d, i) => {
       d["coords"] = projection([d['Longitude'], d["Latitude"]]);
@@ -271,7 +268,7 @@
       .attr("r", 6 / k)
       .attr('cx', d => d["coords"][0])
       .attr("cy", d => d["coords"][1])
-      .attr("fill", "#fd3a5d")
+      .attr("fill", "#58aaca")
       .attr("opacity", 0.7)
     // zooming interactivity
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
@@ -334,7 +331,7 @@
           .attr("r", 6 / k)
           .attr('cx', d => d["coords"][0])
           .attr("cy", d => d["coords"][1])
-          .attr("fill", "#588bca")
+          .attr("fill", "#58aaca")
           .attr("opacity", 0.7)
           .style("stroke", "white");
         let circle = d3.select(this)
@@ -342,6 +339,7 @@
           circle.attr("r", circle.attr("r") / 1.5)
             .attr("fill", "#58aaca")
             .style("stroke", "none")
+            .attr("r", 6 / k)
             .attr("opacity", 0.7)
             .style("filter", "none")
             .style("stroke", "white");
@@ -428,7 +426,7 @@
         saleDict["224236.22"] += 1
       } else if (saleAmount[i] > 38464) {
         saleDict["38464"] += 1
-      } 
+      }
     }
 
     // Rent Price
@@ -544,12 +542,12 @@
 
     // x and y axis labels and titles
     svg.append('g')
-    .attr('transform', 'translate(0, 250)')
-    .call(d3.axisBottom(xScale));
+      .attr('transform', 'translate(0, 250)')
+      .call(d3.axisBottom(xScale));
 
     svg2.append('g')
-    .attr('transform', 'translate(0, 250)')
-    .call(d3.axisBottom(xScale2));
+      .attr('transform', 'translate(0, 250)')
+      .call(d3.axisBottom(xScale2));
 
 
     // svg.append('g')
