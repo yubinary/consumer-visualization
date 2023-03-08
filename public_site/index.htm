@@ -15,9 +15,7 @@
 
 <body>
   <h1>Discover Most Suitable Property in <b>Pittsburg, PA</b></h1>
-
-  <div>
-    <div class="flex">
+<div class="inline"> 
       <div class="container">
         <!-- information about the house !-->
         <div class="infobox">
@@ -30,13 +28,13 @@
           <p>🛏 <span id="bedroom"></span>🛁 <span id="bathroom"></span>🚪 <span id="roomnum"></span></p>
           <p class="info">◼️ lot <span id="lotsize"></span> ◼️ finished <span id="finishedsize"></span></p>
           <p class="info">🏗 Built in <span id="year"></span></p>
-        </div>
+        </div> <!-- infobox-->
         <svg id="main" height=700 width=900></svg>
-      </div>
-      <div>
-        <div class="formDiv">
-          <form id="form">
-            <div class="form-field">
+      </div> <!--container-->
+
+      <div class="formDiv">
+        <form id="form">
+          <div class="form-field">
               <h3>Category</h3>
               <div class="checkbox">
                 <input type="checkbox" id="single" name="category" value="SingleFamily">
@@ -54,8 +52,9 @@
                 <input type="checkbox" id="condo" name="category" value="Condominium">
                 <label for=Condominium">Condominium</label>
               </div>
-            </div>
-            <div class="form-field">
+          </div> <!--form field-->
+          
+          <div class="form-field">
               <h3>Rooms</h3>
               <p>Bedroom</p>
               <input type="radio" id="bed0" name="bedroom" value="0"><label for=bed0">0</label>
@@ -75,8 +74,9 @@
                 <input type="text" id="minRoom" name="minRoom" placeholder="Min Room">
                 <input type="text" id="maxRoom" name="maxRoom" placeholder="Max Room">
               </div>
-            </div>
-            <div class="form-field">
+          </div> <!--form field-->
+          
+          <div class="form-field">
               <h3>Price Range</h3>
               <div class="checkbox">
                 <input type="radio" id="sales" name="type" value="sales" checked>
@@ -86,22 +86,20 @@
                 <input type="radio" id="rent" name="type" value="rent">
                 <label for="rent">For Rent</label>
               </div>
-              <svg id="salesSvg" height=300 width=500></svg>
-              <svg id="rentSvg" height=300 width=500></svg>
+              <svg id="salesSvg" height=150 width=280></svg>
+              <svg id="rentSvg" height=150 width=280></svg>
               <div class="range">
                 <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
                 <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
               </div>
-            </div>
-            <div class="form-button">
+          </div>
+
+          <div class="form-button">
               <input type="button" id="button" value="Apply Filter">
               <input type="button" id="reset-button" value="Reset Filter">
-            </div>
+          </div>
           </form>
-        </div>
-      </div>
-    </div>
-  </div>
+      </div> <!--form div--> </div>
 </body>
 
 <script>
@@ -445,13 +443,13 @@
       }
     }
 
-    // 3. scale the data
-    for (let key in saleDict) {
-      saleDict[key] += 40;
-    }
-    for (let key in rentDict) {
-      rentDict[key] += 40;
-    }
+    // // 3. scale the data
+    // for (let key in saleDict) {
+    //   saleDict[key] += 40;
+    // }
+    // for (let key in rentDict) {
+    //   rentDict[key] += 40;
+    // }
 
     // 2. set up the svg for Sales Amount bar Charts
 
@@ -465,14 +463,15 @@
     //  Define the scales for the x and y axes
     let xScale = d3.scaleBand()
       .domain(Object.keys(saleDict))
-      .range([0, 350])
+      .range([0, 280])
       .padding(0.1);
 
     let yScale = d3.scaleLinear()
       .domain([0, d3.max(Object.values(saleDict))])
-      .range([250, 0]);
+      .range([80, 0]);
 
     // Create the bars
+
     svg.selectAll('rect')
       .data(Object.entries(saleDict))
       .enter()
@@ -480,7 +479,7 @@
       .attr('x', (d) => xScale(d[0]))
       .attr('y', (d) => yScale(d[1]))
       .attr('width', xScale.bandwidth())
-      .attr('height', (d) => 250 - yScale(d[1]))
+      .attr('height', (d) => 120 - yScale(d[1]))
       .attr('fill', 'steelblue');
 
     // x and y axis labels and titles
@@ -495,7 +494,6 @@
       .attr('x', 200)
       .attr('y', 20)
       .attr('text-anchor', 'middle')
-    // .text('Price Range (Sales Amount)');
 
     var svg2 = d3.select("#rentSvg"),
       margin2 = { top: 20, right: 20, bottom: 30, left: 40 },
@@ -507,12 +505,12 @@
     //  Define the scales for the x and y axes
     let xScale2 = d3.scaleBand()
       .domain(Object.keys(rentDict))
-      .range([0, 350])
+      .range([0, 280])
       .padding(0.1);
 
     let yScale2 = d3.scaleLinear()
       .domain([0, d3.max(Object.values(rentDict))])
-      .range([250, 0]);
+      .range([80, 0]);
 
     // Create the bars
     svg2.selectAll('rect')
@@ -522,18 +520,17 @@
       .attr('x', (d) => xScale2(d[0]))
       .attr('y', (d) => yScale2(d[1]))
       .attr('width', xScale2.bandwidth())
-      .attr('height', (d) => 250 - yScale2(d[1]))
+      .attr('height', (d) => 120 - yScale2(d[1]))
       .attr('fill', 'steelblue');
 
     // x and y axis labels and titles
     svg.append('g')
-      .attr('transform', 'translate(0, 250)')
-      .call(d3.axisBottom(xScale));
+      .attr('transform', 'translate(0, 120)')
+      .call(d3.axisBottom(xScale).tickFormat(d3.format(".1s")));
 
     svg2.append('g')
-      .attr('transform', 'translate(0, 250)')
-      .call(d3.axisBottom(xScale2));
-
+      .attr('transform', 'translate(0, 120)')
+      .call(d3.axisBottom(xScale2).tickFormat(d3.format(".1s")));
 
     // svg.append('g')
     //   .call(d3.axisLeft(yScale));
