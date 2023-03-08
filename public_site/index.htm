@@ -526,11 +526,11 @@
     // x and y axis labels and titles
     svg.append('g')
       .attr('transform', 'translate(0, 120)')
-      .call(d3.axisBottom(xScale).tickFormat(d3.format(".1s")));
+      .call(d3.axisBottom(xScale).tickFormat(d3.format(".2s")));
 
     svg2.append('g')
       .attr('transform', 'translate(0, 120)')
-      .call(d3.axisBottom(xScale2).tickFormat(d3.format(".1s")));
+      .call(d3.axisBottom(xScale2).tickFormat(d3.format(".2s")));
 
     // svg.append('g')
     //   .call(d3.axisLeft(yScale));
